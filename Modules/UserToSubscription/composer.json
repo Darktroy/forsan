@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/usertosubscription",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\UserToSubscription\\Providers\\UserToSubscriptionServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\UserToSubscription\\": ""
+        }
+    }
+}

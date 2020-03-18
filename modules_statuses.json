@@ -1,0 +1,9 @@
+{
+    "User": true,
+    "Userdetails": true,
+    "SubscraptionUser": true,
+    "University": true,
+    "SubscriptionType": true,
+    "UserToSubscription": true,
+    "PaymentType": true
+}

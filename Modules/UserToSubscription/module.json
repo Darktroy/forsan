@@ -1,0 +1,13 @@
+{
+    "name": "UserToSubscription",
+    "alias": "usertosubscription",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\UserToSubscription\\Providers\\UserToSubscriptionServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

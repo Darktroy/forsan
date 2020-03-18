@@ -1,0 +1,13 @@
+{
+    "name": "SubscraptionUser",
+    "alias": "subscraptionuser",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\SubscraptionUser\\Providers\\SubscraptionUserServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

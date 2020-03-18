@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/subscraptionuser",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\SubscraptionUser\\Providers\\SubscraptionUserServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\SubscraptionUser\\": ""
+        }
+    }
+}

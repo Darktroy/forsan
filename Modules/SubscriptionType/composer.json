@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/subscriptiontype",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\SubscriptionType\\Providers\\SubscriptionTypeServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\SubscriptionType\\": ""
+        }
+    }
+}
