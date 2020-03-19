@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/usertosubscription', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->post('/list-of-my-subscribtions', 'UserToSubscriptionController@listAll');
+Route::middleware('auth:api')->post('/list-one-subscribtion', 'UserToSubscriptionController@listOne');
+Route::middleware('auth:api')->post('/renew-one-subscribtion', 'UserToSubscriptionController@renewOne');
+Route::middleware('auth:api')->post('/edit-one-subscribtion', 'UserToSubscriptionController@editOne');
+Route::middleware('auth:api')->post('/change-pickup-location-subscribtion', 'UserToSubscriptionController@changePickupOne');

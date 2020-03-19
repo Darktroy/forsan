@@ -2,13 +2,13 @@
 
 namespace Modules\SubscraptionUser\Http\Controllers;
 
+use Illuminate\Routing\Controller;
+use Modules\SubscraptionUser\Entities\SubscraptionUser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\DB;
-use Modules\SubscraptionUser\Entities\SubscraptionUser;
 use Exception;
 
 class SubscraptionUserController extends Controller
@@ -40,24 +40,24 @@ class SubscraptionUserController extends Controller
      * @param Request $request
      * @return Response
      */
+    
+    public function listAll() {
+                $data = $this->subscraptionUserModel->list();
+                return response()->json([ 'data' =>$data,'message' => @Lang::get('messages.registered'),'success' => true], 200);
+    }
+    
     public function store(Request $request)
     {
-        DB::beginTransaction();
-
-        try {
-            $data = $this->subscraptionUserModel->storeData($request);
-            return response()->json([
-            'data' =>$data,'message' => @Lang::get('messages.registered'),'success' => true], 200);
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            $datra = unserialize($e->getMessage());
-            return response()->json(['error' => $datra , 'status'=>false], 200);
-        }
-
-        
-
-
+            DB::beginTransaction();
+            try {
+                $data = $this->subscraptionUserModel->storeData($request);
+                DB::commit();
+                return response()->json([ 'data' =>$data,'message' => @Lang::get('messages.registered'),'success' => true], 200);
+            } catch (Exception $e) {
+                DB::rollBack();
+                $datra = unserialize($e->getMessage());
+                return response()->json(['error' => $datra , 'status'=>false], 200);
+            }
     }
 
     /**

@@ -142,6 +142,7 @@ return [
 	'code_invalid_mobile_verified'    =>   'كود التفعيل غير صحيح او الموبايل تم تفعيله مسبقا',
 	'Email_Verified_successfully'    =>   'تم تفعيل البريد ',
 	'code_invalid_email_verified'    =>   'الكود غير صحيح او البريد مفعل مسبقا',
+	'month'    =>   'aaaaa',
 	'aaaaa'    =>   'aaaaa',
 	'aaaaa'    =>   'aaaaa',
 	'aaaaa'    =>   'aaaaa',
@@ -154,7 +155,5 @@ return [
 	'aaaaa'    =>   'aaaaa',
 	'aaaaa'    =>   'aaaaa',
 	'aaaaa'    =>   'aaaaa',
-	'aaaaa'    =>   'aaaaa',
-
 
 ];
