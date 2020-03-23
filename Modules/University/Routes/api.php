@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/university', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->post('/list-universties', 'UniversityController@listAll');

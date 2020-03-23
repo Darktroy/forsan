@@ -5,13 +5,24 @@ namespace Modules\University\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\University\Entities\University;
+use Illuminate\Support\Facades\Lang;
 
 class UniversityController extends Controller
 {
+    private $universityModelObj = Null;
     /**
      * Display a listing of the resource.
      * @return Response
      */
+    public function __construct() {
+        $this->universityModelObj = new University() ;
+    }
+    public function listAll() {
+        $data = $this->universityModelObj::all();
+        return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
+    }
+    
     public function index()
     {
         return view('university::index');

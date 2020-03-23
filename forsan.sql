@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 18, 2020 at 02:55 PM
+-- Generation Time: Mar 19, 2020 at 01:34 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -196,7 +196,9 @@ CREATE TABLE `PaymentType` (
 --
 
 INSERT INTO `PaymentType` (`payment_type_id`, `name_ar`, `name_en`, `created_at`, `updated_at`) VALUES
-(1, 'تيست', 'test', '2020-03-18 13:39:38', NULL);
+(1, 'تيست', 'test', '2020-03-18 13:39:38', NULL),
+(2, '2 تيست دفع', '2 test payments', '2020-03-18 13:39:38', NULL),
+(3, '3 تيست دفع', '3 test payments', '2020-03-18 13:39:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -205,6 +207,7 @@ INSERT INTO `PaymentType` (`payment_type_id`, `name_ar`, `name_en`, `created_at`
 --
 
 CREATE TABLE `SubscraptionUser` (
+  `user_id` int(64) NOT NULL,
   `SubscraptionUser_id` int(32) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -217,6 +220,15 @@ CREATE TABLE `SubscraptionUser` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
+
+--
+-- Dumping data for table `SubscraptionUser`
+--
+
+INSERT INTO `SubscraptionUser` (`user_id`, `SubscraptionUser_id`, `name`, `email`, `university_id`, `latitude`, `longitude`, `address`, `payment_type_id`, `mobile`, `created_at`, `updated_at`) VALUES
+(0, 30, 'test', 'emailtest18mar2020@gmail.com12345', 1, 11.1234567890000000, 22.1234567890000000, 'test address', 1, '0100252525', '2020-03-18 20:47:19', '2020-03-18 20:47:19'),
+(1, 31, 'test', 'emailtest18mar2020@gmail.com123456', 1, 21.0250000000000000, 21.0250000000000000, 'gfd54', 1, '0100252525', '2020-03-18 20:53:01', '2020-03-19 10:24:49'),
+(1, 32, 'test2', '2emailtest18mar2020@gmail.com123456', 1, 11.1234567890000000, 22.1234567890000000, 'test address', 1, '0100252525', '2020-03-18 20:53:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -241,7 +253,9 @@ CREATE TABLE `SubscriptionType` (
 --
 
 INSERT INTO `SubscriptionType` (`SubscriptionType_id`, `name_ar`, `name_en`, `subscription_amount`, `tax_amount`, `trans_amount`, `total_amount`, `created_at`, `updated_at`) VALUES
-(1, 'تيست نوع الاشتراك', 'test Subscription Type', 123.00, 123.58, 222.00, 0.00, '2020-03-18 14:10:45', '2020-03-18 14:10:45');
+(1, 'تيست نوع الاشتراك', 'test Subscription Type', 123.00, 123.58, 222.00, 0.00, '2020-03-18 14:10:45', '2020-03-18 14:10:45'),
+(3, 'تيست نوع الاشتراك2', '2test Subscription Type', 123.00, 123.58, 222.00, 0.00, '2020-03-18 14:10:45', '2020-03-18 14:10:45'),
+(4, 'تيست نوع الاشتراك3', '3test Subscription Type', 123.00, 123.58, 222.00, 0.00, '2020-03-18 14:10:45', '2020-03-18 14:10:45');
 
 -- --------------------------------------------------------
 
@@ -264,7 +278,9 @@ CREATE TABLE `university` (
 --
 
 INSERT INTO `university` (`university_id`, `name_ar`, `name_en`, `latitude`, `longitude`, `created_at`, `updated_at`) VALUES
-(1, 'تيست جامعه', 'test university', 11.25520550, 31.55779988, '2020-03-18 09:00:44', '2019-08-04 12:51:44');
+(1, 'تيست جامعه', 'test university', 11.25520550, 31.55779988, '2020-03-18 09:00:44', '2019-08-04 12:51:44'),
+(2, 'تيست جامعه 2', 'test university 2', 11.25520550, 31.55779988, '2020-03-18 09:00:44', NULL),
+(3, 'تيست جامعه 3', 'test university 3', 11.25520550, 31.55779988, '2020-03-18 09:00:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -314,9 +330,25 @@ CREATE TABLE `UserToSubscription` (
   `end_date` date DEFAULT NULL,
   `way` enum('go','back','go_and_back','') NOT NULL DEFAULT 'go_and_back',
   `period` enum('month','one semester','two semester','') NOT NULL DEFAULT 'one semester',
+  `user_id` int(24) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
+
+--
+-- Dumping data for table `UserToSubscription`
+--
+
+INSERT INTO `UserToSubscription` (`UserToSubscription_id`, `SubscraptionUser_id`, `SubscriptionType_id`, `PaymentType_id`, `start_date`, `end_date`, `way`, `period`, `user_id`, `created_at`, `updated_at`) VALUES
+(23, 32, 1, 1, '2019-08-15', NULL, 'back', 'month', 1, '2020-03-18 20:47:19', '2020-03-18 20:47:19'),
+(24, 31, 1, 1, '2019-08-15', NULL, 'back', 'month', 1, '2020-03-18 20:53:01', '2020-03-18 20:53:01'),
+(25, 31, 1, 1, '2019-03-19', NULL, 'back', 'month', 1, '2020-03-19 09:39:13', '2020-03-19 09:39:13'),
+(26, 31, 1, 1, '2019-03-19', NULL, 'back', 'month', 1, '2020-03-19 09:40:35', '2020-03-19 09:40:35'),
+(27, 31, 1, 1, '2019-03-19', NULL, 'back', 'month', 1, '2020-03-19 09:40:39', '2020-03-19 09:40:39'),
+(28, 31, 1, 1, '2019-03-19', NULL, 'back', 'month', 1, '2020-03-19 09:40:42', '2020-03-19 09:40:42'),
+(29, 31, 1, 1, '2019-03-19', NULL, 'back', 'month', 1, '2020-03-19 09:40:44', '2020-03-19 09:40:44'),
+(30, 31, 1, 1, '2019-03-19', NULL, 'back', 'one semester', 1, '2020-03-19 09:40:47', '2020-03-19 09:56:28'),
+(31, 31, 1, 1, '2019-03-19', NULL, 'back', 'month', 1, '2020-03-19 09:41:01', '2020-03-19 09:41:01');
 
 --
 -- Indexes for dumped tables
@@ -436,25 +468,25 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `PaymentType`
 --
 ALTER TABLE `PaymentType`
-  MODIFY `payment_type_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `payment_type_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `SubscraptionUser`
 --
 ALTER TABLE `SubscraptionUser`
-  MODIFY `SubscraptionUser_id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `SubscraptionUser_id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `SubscriptionType`
 --
 ALTER TABLE `SubscriptionType`
-  MODIFY `SubscriptionType_id` int(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `SubscriptionType_id` int(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-  MODIFY `university_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `university_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -466,7 +498,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `UserToSubscription`
 --
 ALTER TABLE `UserToSubscription`
-  MODIFY `UserToSubscription_id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `UserToSubscription_id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/paymenttype', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->post('/list-payment-types', 'PaymentTypeController@listAll');

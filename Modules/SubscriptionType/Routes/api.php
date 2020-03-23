@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/subscriptiontype', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->post('/list-subscriptions-types', 'SubscriptionTypeController@listAll');

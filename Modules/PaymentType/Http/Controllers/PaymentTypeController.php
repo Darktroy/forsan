@@ -5,16 +5,21 @@ namespace Modules\PaymentType\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
+use Modules\PaymentType\Entities\PaymentType;
+use Illuminate\Support\Facades\Lang;
 class PaymentTypeController extends Controller
 {
+    private $subscriptionTypeModelObj = Null;
     /**
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
-    {
-        return view('paymenttype::index');
+    public function __construct() {
+        $this->paymentTypeModelObj = new PaymentType() ;
+    }
+    public function listAll() {
+        $data = $this->paymentTypeModelObj::all();
+        return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
     }
 
     /**

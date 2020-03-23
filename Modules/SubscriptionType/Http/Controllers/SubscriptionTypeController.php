@@ -5,13 +5,24 @@ namespace Modules\SubscriptionType\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\SubscriptionType\Entities\SubscriptionType;
+use Illuminate\Support\Facades\Lang;
 
 class SubscriptionTypeController extends Controller
 {
+    private $subscriptionTypeModelObj = Null;
     /**
      * Display a listing of the resource.
      * @return Response
      */
+    public function __construct() {
+        $this->subscriptionTypeModelObj = new SubscriptionType() ;
+    }
+    public function listAll() {
+        $data = $this->subscriptionTypeModelObj::all();
+        return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
+    }
+    
     public function index()
     {
         return view('subscriptiontype::index');
