@@ -5,5 +5,9 @@
     "University": true,
     "SubscriptionType": true,
     "UserToSubscription": true,
-    "PaymentType": true
+    "PaymentType": true,
+    "BanksList": true,
+    "Blog": true,
+    "BankAccounts": true,
+    "Ticket": true
 }

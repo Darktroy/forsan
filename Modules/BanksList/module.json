@@ -1,0 +1,13 @@
+{
+    "name": "BanksList",
+    "alias": "bankslist",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\BanksList\\Providers\\BanksListServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

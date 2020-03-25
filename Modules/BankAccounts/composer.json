@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/bankaccounts",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\BankAccounts\\Providers\\BankAccountsServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\BankAccounts\\": ""
+        }
+    }
+}
