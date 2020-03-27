@@ -23,7 +23,8 @@ class UserdetailsController extends Controller
 
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|min:3',
-            'email' => 'required|email|unique:users',
+//            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             'type' => 'required|in:user,driver',
             'mobile' => 'required',
             'password' => 'required|min:6|required_with:c_password|same:c_password',
