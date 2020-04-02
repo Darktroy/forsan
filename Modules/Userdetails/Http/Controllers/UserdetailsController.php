@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Userdetails\Entities\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Lang;
+use App;
 
 class UserdetailsController extends Controller
 {
@@ -26,6 +27,7 @@ class UserdetailsController extends Controller
 //            'email' => 'required|email|unique:users',
             'email' => 'required|email',
             'type' => 'required|in:user,driver',
+            'lang' => 'required|in:en,ar',
             'mobile' => 'required',
             'password' => 'required|min:6|required_with:c_password|same:c_password',
             'c_password' => 'min:6'
@@ -45,14 +47,17 @@ class UserdetailsController extends Controller
             'email' => $request->email,
             'type' => $request->type,
             'mobile' => $request->mobile,
+            'lang' => $request->lang,
             'password' => bcrypt($request->password)
         ]);
+        App::setLocale($request->lang);
 
         $token = $user->createToken('TutsForWeb')->accessToken;
 
         return response()->json([
             'data' => [
-                'token' => $token, 'name' => $user['name'], 'user_data' => $user,
+                'token' => $token, 'name' => $user['name'],
+                'lang'=> App::getLocale(), 'user_data' => $user,
             ],
             'message' => @Lang::get('messages.registered'),
             'success' => true

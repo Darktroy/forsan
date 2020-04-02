@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Modules\UserToSubscription\Entities\UserToSubscription;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class SubscraptionUser extends Model {
 
@@ -81,20 +82,27 @@ class SubscraptionUser extends Model {
         return $subscribeduser;
     }
 
-    public function list() {
+    public function list(Request $request) {
+        if(isset($request->lang) && ($request->lang == 'ar'|| $request->lang == 'en') ){
+            App::setlocale($request->lang);
+        }
         $user = auth()->user()->toArray();
-        $rowdata = self::where('user_id', $user['user_id'])->with('userviasubscription.paymentType'
-                        , 'userviasubscription.SubscriptionType', 'university')->get()->toArray();
+        $rowdata = self::where('user_id', $user['user_id'])
+        ->with('userviasubscription.paymentType'
+                        , 'userviasubscription.SubscriptionType'
+                        , 'university')->get()->toArray();
         $data = [];
         if (count($rowdata)) {
             foreach ($rowdata as $key => $row) {
-                $data[] = array('SubscraptionUser_id' => $row['SubscraptionUser_id'], 'name' => $row['name'],
-                    'email' => $row['email'], 'university_name' => $row['university']['name_ar'],
+                $data[] = array('SubscraptionUser_id' => $row['SubscraptionUser_id'],
+                  'name' => $row['name'],
+                    'email' => $row['email'],
+                    'university_name' => $row['university']['name_'.App::getLocale()],
                     'latitude' => $row['latitude'], 'longitude' => $row['longitude'],
                     'address' => $row['address'],
-                    'payment_type_name' => $row['userviasubscription'][0]['payment_type']['name_ar'],
+                    'payment_type_name' => $row['userviasubscription'][0]['payment_type']['name_'.App::getLocale()],
                     'subscription_id' => $row['userviasubscription'][0]['UserToSubscription_id'],
-                    'subscription_type_name' => $row['userviasubscription'][0]['subscription_type']['name_ar'],
+                    'subscription_type_name' => $row['userviasubscription'][0]['subscription_type']['name_'.App::getLocale()],
                     'subscription_amount' => $row['userviasubscription'][0]['subscription_type']['subscription_amount'],
                     'subscription_tax_amount' => $row['userviasubscription'][0]['subscription_type']['tax_amount'],
                     'subscription_trans_amount' => $row['userviasubscription'][0]['subscription_type']['trans_amount'],

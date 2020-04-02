@@ -40,12 +40,12 @@ class SubscraptionUserController extends Controller
      * @param Request $request
      * @return Response
      */
-    
-    public function listAll() {
-                $data = $this->subscraptionUserModel->list();
+
+    public function listAll(Request $request) {
+                $data = $this->subscraptionUserModel->list($request);
                 return response()->json([ 'data' =>$data,'message' => @Lang::get('messages.registered'),'success' => true], 200);
     }
-    
+
     public function store(Request $request)
     {
             DB::beginTransaction();

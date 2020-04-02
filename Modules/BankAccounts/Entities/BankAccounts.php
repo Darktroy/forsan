@@ -13,7 +13,8 @@ class BankAccounts extends Model
     protected $table = 'BankAccounts';
     protected $primaryKey = 'BankAccounts_id';
 //    protected $primaryKey = 'BanksList_id';
-    protected $fillable = [ 'UserToSubscription_id', 'adminstration_BanksList_id','client_BanksList_name','user_id',
+    protected $fillable = [ 'UserToSubscription_id', 'adminstration_BanksList_id',
+    'client_BanksList_name','user_id',
                         'account_number','trans_code','trans_date','image_name'];
     // Relations 
     public function adminBanksDetails() {

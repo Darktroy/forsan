@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\University\Entities\University;
 use Illuminate\Support\Facades\Lang;
+use App;
 
 class UniversityController extends Controller
 {
@@ -19,10 +20,14 @@ class UniversityController extends Controller
         $this->universityModelObj = new University() ;
     }
     public function listAll() {
-        $data = $this->universityModelObj::all();
+        if(isset($request->lang) && ($request->lang == 'ar'|| $request->lang == 'en') ){
+            App::setlocale($request->lang);
+        }
+        $data = $this->universityModelObj->select('university_id',
+        'name_'.App::getLocale().' as name')->get()->toArray();
         return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
     }
-    
+
     public function index()
     {
         return view('university::index');

@@ -18,11 +18,11 @@ class SubscriptionTypeController extends Controller
     public function __construct() {
         $this->subscriptionTypeModelObj = new SubscriptionType() ;
     }
-    public function listAll() {
-        $data = $this->subscriptionTypeModelObj::all();
+    public function listAll(Request $request) {
+              $data = $this->subscriptionTypeModelObj->listAll($request);
         return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
     }
-    
+
     public function index()
     {
         return view('subscriptiontype::index');

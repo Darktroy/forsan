@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Modules\Ticket\Entities\Ticket;
 use Modules\Ticket\Entities\TicketMessages;
 use Exception;
+use Illuminate\Http\Client\Request as ClientRequest;
 
 class TicketController extends Controller {
 
@@ -20,7 +21,7 @@ class TicketController extends Controller {
      */
     private $ticketModel = null;
     private $ticketMessages = null;
-    
+
     public function __construct() {
         $this->ticketModel = new Ticket();
         $this->ticketMessages = new TicketMessages();

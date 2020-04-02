@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 19, 2020 at 01:34 PM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: Mar 28, 2020 at 05:45 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,49 @@ SET time_zone = "+00:00";
 --
 -- Database: `forsan`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `BankAccounts`
+--
+
+CREATE TABLE `BankAccounts` (
+  `BankAccounts_id` int(10) NOT NULL,
+  `UserToSubscription_id` int(10) NOT NULL,
+  `adminstration_BanksList_id` int(5) NOT NULL,
+  `client_BanksList_name` varchar(250) NOT NULL,
+  `user_id` int(24) NOT NULL,
+  `account_number` varchar(254) NOT NULL,
+  `trans_code` varchar(254) NOT NULL,
+  `trans_date` date NOT NULL,
+  `image_name` varchar(254) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `BanksList`
+--
+
+CREATE TABLE `BanksList` (
+  `BanksList_id` int(10) NOT NULL,
+  `bank_name_ar` varchar(250) NOT NULL,
+  `bank_name_en` varchar(250) NOT NULL,
+  `adminstration` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `BanksList`
+--
+
+INSERT INTO `BanksList` (`BanksList_id`, `bank_name_ar`, `bank_name_en`, `adminstration`, `created_at`, `updated_at`) VALUES
+(1, 'تسصمىر', 'srfvge', 1, '2020-03-28 16:16:15', NULL),
+(2, 'تسصمىرferv', 'srfvge', 1, '2020-03-28 16:16:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -88,6 +131,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('0585f87c7dfbe16f025dbf55d463d58087fc30e51e81c37364ca985809f14ef598b1856dc1fa4c5d', 1, 1, 'TutsForWeb', '[]', 0, '2020-03-17 14:37:03', '2020-03-17 14:37:03', '2021-03-17 16:37:03'),
 ('48d1c2f405e346efe2745bfda6061429dc1da99def0ac3db9ad1f0eb4b8adecc9e8759d24f5699d5', 4, 1, 'TutsForWeb', '[]', 0, '2020-03-17 11:16:20', '2020-03-17 11:16:20', '2021-03-17 13:16:20'),
 ('5658e3f23f8c8d2b76d98581e0decdb38987ffd1da3c7477deab170f9192acef3cd71eb1b7c71d9c', 3, 1, 'TutsForWeb', '[]', 0, '2020-03-17 09:12:56', '2020-03-17 09:12:56', '2021-03-17 11:12:56'),
+('57a87c31e38440b2e3d3af4d3fe458433a2476b0a8e447aebaae55cca630598f9fd1bcfcd2147f29', 12, 1, 'TutsForWeb', '[]', 0, '2020-03-28 13:07:09', '2020-03-28 13:07:09', '2021-03-28 15:07:09'),
+('72fd61e9fb8f2b5827cd27a58a7da3d87a18c5b75ca01249accb24feb17d58e22bdb991c59768a37', 10, 1, 'TutsForWeb', '[]', 0, '2020-03-28 13:00:42', '2020-03-28 13:00:42', '2021-03-28 15:00:42'),
 ('73a3fcc146d56b4c030b26db15ee421539af94fc1f22af7e50235fa629a52bdf4ff458ca0052108a', NULL, 1, 'TutsForWeb', '[]', 0, '2020-03-18 09:04:16', '2020-03-18 09:04:16', '2021-03-18 11:04:16'),
 ('7f29dc2ef1035e01394422ef6609c2d76c3c30f5e372b53f932c963c543daba0720212b04983bec4', 1, 1, 'TutsForWeb', '[]', 0, '2020-03-17 04:55:53', '2020-03-17 04:55:53', '2021-03-17 06:55:53'),
 ('8a3a7776b7dbd0c8bd2c2392e34913cf88b350de0951d67ac2be77da32cdc779ac26d02bc6a1c51b', 2, 1, 'TutsForWeb', '[]', 0, '2020-03-17 09:12:19', '2020-03-17 09:12:19', '2021-03-17 11:12:19'),
@@ -260,6 +305,37 @@ INSERT INTO `SubscriptionType` (`SubscriptionType_id`, `name_ar`, `name_en`, `su
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Ticket`
+--
+
+CREATE TABLE `Ticket` (
+  `Ticket_id` int(10) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `ticket_title` varchar(256) NOT NULL,
+  `ticket_body` longtext NOT NULL,
+  `created_at` int(11) NOT NULL DEFAULT current_timestamp(),
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TicketMessages`
+--
+
+CREATE TABLE `TicketMessages` (
+  `TicketMessages_id` int(24) NOT NULL,
+  `Ticket_id` int(10) NOT NULL,
+  `user_id` int(24) NOT NULL,
+  `ticket_body` longtext NOT NULL,
+  `type` varchar(64) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `university`
 --
 
@@ -294,6 +370,7 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `mobile` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lang` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ar',
   `type` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -305,15 +382,18 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `name`, `email`, `email_verified_at`, `mobile`, `type`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Ali Shahin', 'a17032020@gmail.com', NULL, '05008922980', 'user', '$2y$10$mBF3UQBh/M5kDMO/aLZ3T.iV/0ZTVMgAE6z4XmI13waKl0lhFymhm', NULL, '2020-03-17 04:55:50', '2020-03-17 04:55:50'),
-(2, 'Ali Shahin', 'a170320202@gmail.com', NULL, '05008922980', 'user', '$2y$10$IUPM/Txbqr69U3IGNodyaeyWMV1xjJdsrnaPJd9tk7yQKgKQiHDRa', NULL, '2020-03-17 09:12:16', '2020-03-17 09:12:16'),
-(3, 'Ali Shahin', 'a170320202@gmail.com3', NULL, '05008922980', 'user', '$2y$10$pUw7kIoForuQJXyyMF8FdOvRcQJFMAnwULUIE5E9TgbY1mqTXK6Qi', NULL, '2020-03-17 09:12:56', '2020-03-17 09:12:56'),
-(4, 'Ali Shahin', 'a170320202@gmail.co', NULL, '05008922980', 'user', '$2y$10$N6RyNWdC4JhMqVLfl4ghaOjEIwfwFUSeIvKKOdu.weofzBq4U1qh6', NULL, '2020-03-17 11:16:19', '2020-03-17 11:16:19'),
-(5, 'Ali Shahin', 'a170320202@gmail.co3', NULL, '05008922980', 'user', '$2y$10$fsPIkXkGt2ljhRson1Tkmue.zTNbz2ggNKuT9a4srA6xqukMI.Goe', NULL, '2020-03-17 11:42:14', '2020-03-17 11:42:14'),
-(6, 'Ali Shahin', 'a170320202@gmail.co4', NULL, '05008922980', 'user', '$2y$10$PM02S98.eXeU4TVP5K7p9epituEDxqG3vcnYU2oUB7cKeuDF7EoTm', NULL, '2020-03-17 11:43:30', '2020-03-17 11:43:30'),
-(7, 'Ali Shahin', 'a170320202@gmail.co5', NULL, '05008922980', 'user', '$2y$10$QE9EH/xKJaRz8/WPA0.tCeElmBuBVWmyj2iokuIqUPp59cWJcNWZ2', NULL, '2020-03-17 11:45:18', '2020-03-17 11:45:18'),
-(8, 'Ali Shahin', 'a170320202@gmail.co6', NULL, '05008922980', 'user', '$2y$10$W9aTYjF3.TqmT55D/Ey2/uUQwPeEyD1gwTpwE76Kg37TVLpklCB/u', NULL, '2020-03-17 11:45:58', '2020-03-17 11:45:58');
+INSERT INTO `users` (`user_id`, `name`, `email`, `email_verified_at`, `mobile`, `lang`, `type`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Ali Shahin', 'a17032020@gmail.com', NULL, '05008922980', 'ar', 'user', '$2y$10$mBF3UQBh/M5kDMO/aLZ3T.iV/0ZTVMgAE6z4XmI13waKl0lhFymhm', NULL, '2020-03-17 04:55:50', '2020-03-17 04:55:50'),
+(2, 'Ali Shahin', 'a170320202@gmail.com', NULL, '05008922980', 'ar', 'user', '$2y$10$IUPM/Txbqr69U3IGNodyaeyWMV1xjJdsrnaPJd9tk7yQKgKQiHDRa', NULL, '2020-03-17 09:12:16', '2020-03-17 09:12:16'),
+(3, 'Ali Shahin', 'a170320202@gmail.com3', NULL, '05008922980', 'ar', 'user', '$2y$10$pUw7kIoForuQJXyyMF8FdOvRcQJFMAnwULUIE5E9TgbY1mqTXK6Qi', NULL, '2020-03-17 09:12:56', '2020-03-17 09:12:56'),
+(4, 'Ali Shahin', 'a170320202@gmail.co', NULL, '05008922980', 'ar', 'user', '$2y$10$N6RyNWdC4JhMqVLfl4ghaOjEIwfwFUSeIvKKOdu.weofzBq4U1qh6', NULL, '2020-03-17 11:16:19', '2020-03-17 11:16:19'),
+(5, 'Ali Shahin', 'a170320202@gmail.co3', NULL, '05008922980', 'ar', 'user', '$2y$10$fsPIkXkGt2ljhRson1Tkmue.zTNbz2ggNKuT9a4srA6xqukMI.Goe', NULL, '2020-03-17 11:42:14', '2020-03-17 11:42:14'),
+(6, 'Ali Shahin', 'a170320202@gmail.co4', NULL, '05008922980', 'ar', 'user', '$2y$10$PM02S98.eXeU4TVP5K7p9epituEDxqG3vcnYU2oUB7cKeuDF7EoTm', NULL, '2020-03-17 11:43:30', '2020-03-17 11:43:30'),
+(7, 'Ali Shahin', 'a170320202@gmail.co5', NULL, '05008922980', 'ar', 'user', '$2y$10$QE9EH/xKJaRz8/WPA0.tCeElmBuBVWmyj2iokuIqUPp59cWJcNWZ2', NULL, '2020-03-17 11:45:18', '2020-03-17 11:45:18'),
+(8, 'Ali Shahin', 'a170320202@gmail.co6', NULL, '05008922980', 'ar', 'user', '$2y$10$W9aTYjF3.TqmT55D/Ey2/uUQwPeEyD1gwTpwE76Kg37TVLpklCB/u', NULL, '2020-03-17 11:45:58', '2020-03-17 11:45:58'),
+(10, 'Ali Shahin', 'a170320202@gmail.co61', NULL, '05008922980', 'ar', 'user', '$2y$10$TZ3pnSaZ7nOTJQ8MhQEAkuk9gxk9.Q0klV8uwmkpdCxfrpHta2DLy', NULL, '2020-03-28 13:00:41', '2020-03-28 13:00:41'),
+(11, 'Ali Shahin', 'a170320202@gmail.co61', NULL, '05008922980', 'en', 'user', '$2y$10$J48Gx.xvom3K2LxN4IzLgevl8pZxgSPJ3BOuRgFewfyGTeD4OIuVC', NULL, '2020-03-28 13:04:49', '2020-03-28 13:04:49'),
+(12, 'Ali Shahin', 'a170320202@gmail.co61', NULL, '05008922980', 'en', 'user', '$2y$10$c02tzEdXFYOhJO2mHMWma.doKteeLzOIbcXPi/y2y4L0SBLWM.zT2', NULL, '2020-03-28 13:07:09', '2020-03-28 13:07:09');
 
 -- --------------------------------------------------------
 
@@ -353,6 +433,18 @@ INSERT INTO `UserToSubscription` (`UserToSubscription_id`, `SubscraptionUser_id`
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `BankAccounts`
+--
+ALTER TABLE `BankAccounts`
+  ADD PRIMARY KEY (`BankAccounts_id`);
+
+--
+-- Indexes for table `BanksList`
+--
+ALTER TABLE `BanksList`
+  ADD PRIMARY KEY (`BanksList_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -418,6 +510,12 @@ ALTER TABLE `SubscriptionType`
   ADD PRIMARY KEY (`SubscriptionType_id`);
 
 --
+-- Indexes for table `Ticket`
+--
+ALTER TABLE `Ticket`
+  ADD PRIMARY KEY (`Ticket_id`);
+
+--
 -- Indexes for table `university`
 --
 ALTER TABLE `university`
@@ -427,8 +525,7 @@ ALTER TABLE `university`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Indexes for table `UserToSubscription`
@@ -439,6 +536,18 @@ ALTER TABLE `UserToSubscription`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `BankAccounts`
+--
+ALTER TABLE `BankAccounts`
+  MODIFY `BankAccounts_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `BanksList`
+--
+ALTER TABLE `BanksList`
+  MODIFY `BanksList_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -483,6 +592,12 @@ ALTER TABLE `SubscriptionType`
   MODIFY `SubscriptionType_id` int(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `Ticket`
+--
+ALTER TABLE `Ticket`
+  MODIFY `Ticket_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
@@ -492,7 +607,7 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `UserToSubscription`

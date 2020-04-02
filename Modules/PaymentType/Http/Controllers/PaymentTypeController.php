@@ -17,8 +17,8 @@ class PaymentTypeController extends Controller
     public function __construct() {
         $this->paymentTypeModelObj = new PaymentType() ;
     }
-    public function listAll() {
-        $data = $this->paymentTypeModelObj::all();
+    public function listAll(Request $request) {
+        $data = $this->paymentTypeModelObj->listAll($request);
         return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
     }
 

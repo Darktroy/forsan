@@ -175,6 +175,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Iessa
+        // Illuminate\Http\Request::class,
+
+
     ],
 
     /*
@@ -227,7 +231,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Lang' =>Illuminate\Support\Facades\Lang::class,
-
     ],
 
 ];

@@ -21,13 +21,12 @@ class BanksListController extends Controller
     public function __construct() {
         $this->banksListModelObj = new BanksList() ;
     }
-    public function listAllAdminBanks() {
-        $data = $this->banksListModelObj::where('adminstration',1)->get()->toArray();
+    public function listAllAdminBanks(Request $request) {
+        $data = $this->banksListModelObj->listAllAdminBanks($request);
         return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
     }
-    public function listAll() {
-//        $data = $this->banksListModelObj::all();
-        $data = $this->banksListModelObj::orderBy('created_at', 'desc')->get()->toArray();
+    public function listAll(Request $request) {
+        $data = $this->banksListModelObj->listAll($request);
         return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
     }
 
