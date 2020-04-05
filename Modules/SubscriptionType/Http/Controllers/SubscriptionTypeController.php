@@ -6,23 +6,59 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\SubscriptionType\Entities\SubscriptionType;
+use Modules\SubscriptionType\Entities\SliderImages;
+use Modules\SubscriptionType\Entities\way;
+use Modules\SubscriptionType\Entities\period;
 use Illuminate\Support\Facades\Lang;
 
 class SubscriptionTypeController extends Controller
 {
     private $subscriptionTypeModelObj = Null;
+    private $sliderImages = Null;
+    private $way = Null;
+    private $period = Null;
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function __construct() {
         $this->subscriptionTypeModelObj = new SubscriptionType() ;
+        $this->sliderImages = new SliderImages() ;
+        $this->way = new way() ;
+        $this->period = new period() ;
     }
     public function listAll(Request $request) {
-              $data = $this->subscriptionTypeModelObj->listAll($request);
+        $data = [];
+        $data['subscriptionType'] = $this->subscriptionTypeModelObj->listAll($request);
+        $data['way'] = $this->way->listAll($request);
+        $data['period'] = $this->period->listAll($request);
         return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
-    }
+        }
 
+        public function listWays(Request $request) {
+            $data = [];
+            $data['way'] = $this->way->listAll($request);
+            return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
+            }
+            public function listPeriods(Request $request) {
+                $data = [];
+                $data['period'] = $this->period->listAll($request);
+                return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
+                }
+        public function home(Request $request) {
+            $data = [];
+            $data['subscriptionType'] = $this->subscriptionTypeModelObj->listAll($request);
+            $data['SliderImages'] =$this->sliderImages->listAll();
+            $data['way'] = $this->way->listAll($request);
+            $data['period'] = $this->period->listAll($request);
+        return response()->json(['data' => $data,
+                                'message' => @Lang::get('messages.ar'),
+                                'success' => true], 200);
+        }
+        public function test()
+        {
+            echo url();
+        }
     public function index()
     {
         return view('subscriptiontype::index');

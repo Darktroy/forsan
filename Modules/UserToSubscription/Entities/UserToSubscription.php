@@ -11,7 +11,8 @@ use Modules\SubscraptionUser\Entities\SubscraptionUser;
 class UserToSubscription extends Model {
     protected $table = 'UserToSubscription';
     protected $primaryKey = 'UserToSubscription_id';
-    protected $fillable = ['SubscraptionUser_id', 'SubscriptionType_id','PaymentType_id', 'start_date', 'end_date', 'way','user_id','period'];
+    protected $fillable = ['SubscraptionUser_id', 'SubscriptionType_id','PaymentType_id',
+     'start_date', 'end_date', 'way_id','user_id','period_id'];
 // Relations Section
             public function paymentType() {
                 return $this->hasOne('Modules\PaymentType\Entities\PaymentType', 'payment_type_id', 'PaymentType_id');

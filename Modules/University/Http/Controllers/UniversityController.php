@@ -19,13 +19,14 @@ class UniversityController extends Controller
     public function __construct() {
         $this->universityModelObj = new University() ;
     }
-    public function listAll() {
+    public function listAll(Request $request) {
         if(isset($request->lang) && ($request->lang == 'ar'|| $request->lang == 'en') ){
             App::setlocale($request->lang);
         }
         $data = $this->universityModelObj->select('university_id',
         'name_'.App::getLocale().' as name')->get()->toArray();
-        return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
+        return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'),
+        'success' => true], 200);
     }
 
     public function index()

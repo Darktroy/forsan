@@ -14,3 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->post('/list-subscriptions-types', 'SubscriptionTypeController@listAll');
+Route::middleware('auth:api')->post('/list-period-types', 'SubscriptionTypeController@listPeriods');
+Route::middleware('auth:api')->post('/list-way-types', 'SubscriptionTypeController@listWays');
+Route::middleware('auth:api')->post('/forsan-home', 'SubscriptionTypeController@home');
+Route::middleware('auth:api')->post('/test', 'SubscriptionTypeController@test');

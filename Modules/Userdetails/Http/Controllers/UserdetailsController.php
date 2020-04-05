@@ -39,7 +39,9 @@ class UserdetailsController extends Controller
                 $error_msg[] = $er[0];
             }
             //                return @Lang::get('messages.welcome');
-            return response()->json(['error' => $error_msg], 200);
+            return response()->json(['error' => $error_msg,
+            'message' => @Lang::get('messages.registeredfaild'),
+            'success' => false], 200);
         }
 
         $user = User::create([
@@ -94,6 +96,9 @@ class UserdetailsController extends Controller
                 'password' => $request->password
             ];
         }
+        if(isset($request->lang) && ($request->lang == 'ar'|| $request->lang == 'en') ){
+            App::setlocale($request->lang);
+        }
         /* elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
             return ['email' => $request->get('email'), 'password' => $request->get('password')];
         }*/
@@ -104,12 +109,15 @@ class UserdetailsController extends Controller
         if (auth()->attempt($credentials)) {
             // createToken
             $token = auth()->user()->createToken('TutsForWeb')->accessToken;
-            // $token = auth()->user()->createmaileToken('TutsForWeb')->accessToken;
             return response()->json([
-                'user_info' => auth()->user()->toArray(), 'access_token' => $token
+                'user_info' => auth()->user()->toArray(), 'access_token' => $token,
+                'message' => @Lang::get('messages.registered'),
+                'success' => true
             ], 200);
         } else {
-            return response()->json(['error' => 'UnAuthorised'], 401);
+            return response()->json(['error' => 'UnAuthorised',
+            'message' => @Lang::get('messages.registeredfaild'),
+            'success' => false], 200);
         }
     }
 

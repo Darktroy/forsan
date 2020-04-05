@@ -21,7 +21,7 @@ class SubscraptionUser extends Model {
     public function storeData(Request $request) {
         $validator = Validator::make($request->all(), [
                     'name' => 'required|min:3',
-                    'email' => 'required|email|unique:SubscraptionUser',
+                    'email' => 'required|email',
                     'university_id' => 'required|exists:university,university_id',
                     'address' => 'required|min:5',
                     'latitude' => 'required_with:longitude|nullable',
@@ -30,8 +30,8 @@ class SubscraptionUser extends Model {
                     'start_date' => 'required|date',
                     'payment_type_id' => 'required|exists:PaymentType,payment_type_id',
                     'SubscriptionType_id' => 'required|exists:SubscriptionType,SubscriptionType_id',
-                    'period' => 'required|in:month,one semester,two semester',
-                    'way' => 'required|in:go,back,go_and_back',
+                    'period_id' => 'required|exists:period,period_id',
+                    'way_id' => 'required|exists:way,way_id',
                     'SubscriptionType_id' => 'required|exists:SubscriptionType,SubscriptionType_id',
         ]);
         if ($validator->fails()) {
@@ -59,8 +59,8 @@ class SubscraptionUser extends Model {
                     'PaymentType_id' => $request->payment_type_id,
                     'SubscriptionType_id' => $request->SubscriptionType_id,
                     'start_date' => $request->start_date,
-                    'way' => $request->way,
-                    'period' => $request->period,
+                    'way_id' => $request->way_id,
+                    'period_id' => $request->period_id,
                     'user_id' => $user['user_id'],
                     'SubscraptionUser_id' => $subscribeduser['SubscraptionUser_id'],
         ));
@@ -68,9 +68,8 @@ class SubscraptionUser extends Model {
                         ->with('paymentType', 'SubscriptionType')->firstorFail();
         $subscribeduser['start_date'] = $usertoSubscriptiondetails['start_date'];
         $subscribeduser['end_date'] = $usertoSubscriptiondetails['end_date'];
-        $subscribeduser['way'] = $usertoSubscriptiondetails['way'];
-        $subscribeduser['period'] = $usertoSubscriptiondetails['period'];
-        $subscribeduser['period'] = $usertoSubscriptiondetails['period'];
+        $subscribeduser['way'] = $usertoSubscriptiondetails['way_id'];
+        $subscribeduser['period'] = $usertoSubscriptiondetails['period_id'];
         $subscribeduser['payment_type_name_ar'] = $usertoSubscriptiondetails['paymentType']['name_ar'];
         $subscribeduser['payment_type_name_en'] = $usertoSubscriptiondetails['paymentType']['name_en'];
         $subscribeduser['subscription_name_ar'] = $usertoSubscriptiondetails['SubscriptionType']['name_ar'];
