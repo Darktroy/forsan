@@ -24,11 +24,11 @@ class UserdetailsController extends Controller
 
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|min:3',
-//            'email' => 'required|email|unique:users',
-            'email' => 'required|email',
-            'type' => 'required|in:user,driver',
+            'email' => 'Nullable|email|unique:users',
+//            'email' => 'required|email',
+//            'type' => 'required|in:user,driver',
             'lang' => 'required|in:en,ar',
-            'mobile' => 'required',
+            'mobile' => 'required|unique:users',
             'password' => 'required|min:6|required_with:c_password|same:c_password',
             'c_password' => 'min:6'
         ]);
@@ -46,8 +46,8 @@ class UserdetailsController extends Controller
 
         $user = User::create([
             'name' => $request->fullname,
-            'email' => $request->email,
-            'type' => $request->type,
+            'email' => isset($request->email)?$request->email:'',
+            'type' => isset($request->type)?$request->email:'user',
             'mobile' => $request->mobile,
             'lang' => $request->lang,
             'password' => bcrypt($request->password)

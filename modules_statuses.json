@@ -9,5 +9,7 @@
     "BanksList": true,
     "Blog": true,
     "BankAccounts": true,
-    "Ticket": true
+    "Ticket": true,
+    "Payment": true,
+    "Period": true
 }

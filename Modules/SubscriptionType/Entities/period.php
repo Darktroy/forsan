@@ -11,7 +11,7 @@ class period extends Model
 {
     protected $table = 'period';
     protected $primaryKey = 'period_id';
-    protected $fillable = [ 'name_ar','name_en' ];
+    protected $fillable = [ 'name_ar','name_en','months' ];
 
     public function listAll(Request $request){
         if(isset($request->lang) && ($request->lang == 'ar'|| $request->lang == 'en') ){

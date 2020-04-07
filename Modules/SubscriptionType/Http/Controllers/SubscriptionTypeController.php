@@ -32,6 +32,8 @@ class SubscriptionTypeController extends Controller
         $data['subscriptionType'] = $this->subscriptionTypeModelObj->listAll($request);
         $data['way'] = $this->way->listAll($request);
         $data['period'] = $this->period->listAll($request);
+        $paymentTypesObj = new \Modules\PaymentType\Entities\PaymentType();
+        $data['PaymentType']  = $paymentTypesObj->listAll($request);
         return response()->json(['data' => $data, 'message' => @Lang::get('messages.ar'), 'success' => true], 200);
         }
 
@@ -51,6 +53,8 @@ class SubscriptionTypeController extends Controller
             $data['SliderImages'] =$this->sliderImages->listAll();
             $data['way'] = $this->way->listAll($request);
             $data['period'] = $this->period->listAll($request);
+        $paymentTypesObj = new \Modules\PaymentType\Entities\PaymentType();
+        $data['PaymentType'] = $paymentTypesObj->listAll($request);
         return response()->json(['data' => $data,
                                 'message' => @Lang::get('messages.ar'),
                                 'success' => true], 200);

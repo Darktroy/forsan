@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 05, 2020 at 01:41 PM
+-- Generation Time: Apr 07, 2020 at 12:42 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -32,6 +32,7 @@ CREATE TABLE `period` (
   `period_id` int(5) NOT NULL,
   `name_ar` varchar(64) NOT NULL,
   `name_en` varchar(64) NOT NULL,
+  `months` int(2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -40,10 +41,9 @@ CREATE TABLE `period` (
 -- Dumping data for table `period`
 --
 
-INSERT INTO `period` (`period_id`, `name_ar`, `name_en`, `created_at`, `updated_at`) VALUES
-(1, 'شهري', 'Month', '2020-04-05 11:39:05', NULL),
-(2, 'موسمي', 'Semester', '2020-04-05 11:39:05', NULL),
-(3, 'اسبوعي', 'Weekly', '2020-04-05 11:39:28', NULL);
+INSERT INTO `period` (`period_id`, `name_ar`, `name_en`, `months`, `created_at`, `updated_at`) VALUES
+(1, 'شهري', 'Month', 1, '2020-04-05 11:39:05', NULL),
+(2, 'موسمي', 'Semester', 3, '2020-04-05 11:39:05', NULL);
 
 --
 -- Indexes for dumped tables

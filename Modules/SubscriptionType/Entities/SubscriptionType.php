@@ -11,8 +11,8 @@ class SubscriptionType extends Model
 {
     protected $table = 'SubscriptionType';
     protected $primaryKey = 'SubscriptionType_id';
-    protected $fillable = [ 'name_ar', 'name_en','subscription_amount','tax_amount',
-                            'trans_amount','total_amount','period_id','way_id' ];
+    protected $fillable = [ 'name_ar', 'name_en','subscription_amount','tax_amount','subscription_amount_before_offer'
+                            ,'total_amount','period_id','way_id' ];
 
     public function listAll(Request $request){
         if(isset($request->lang) && ($request->lang == 'ar'|| $request->lang == 'en') ){
@@ -20,8 +20,8 @@ class SubscriptionType extends Model
         }
         $data =[];
         $dataRow = self::select('SubscriptionType_id',
-        'name_'.App::getLocale().' as name','total_amount','subscription_amount','tax_amount',
-        'trans_amount','way_id','period_id')->with('way','period')->get()->toArray();
+        'name_'.App::getLocale().' as name','subscription_amount','tax_amount',
+        'way_id','period_id','subscription_amount_before_offer')->with('way','period')->get()->toArray();
         foreach ($dataRow as $key => $value) {
             $tempWayname = $value['way']['name_'.App::getLocale()];
             $tempperiodname = $value['period']['name_'.App::getLocale()];

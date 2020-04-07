@@ -13,5 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->post('/subscribe', 'SubscraptionUserController@store');
+Route::middleware('auth:api')->post('/new-subscribe', 'SubscraptionUserController@store');
 //Route::middleware('auth:api')->post('/list-of-my-subscribtions', 'SubscraptionUserController@listAll');

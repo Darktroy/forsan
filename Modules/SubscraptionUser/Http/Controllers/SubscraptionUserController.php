@@ -56,6 +56,7 @@ class SubscraptionUserController extends Controller
             } catch (Exception $e) {
                 DB::rollBack();
                 $datra = unserialize($e->getMessage());
+//                $datra = $e->getMessage();
                 return response()->json(['error' => $datra , 'status'=>false], 200);
             }
     }

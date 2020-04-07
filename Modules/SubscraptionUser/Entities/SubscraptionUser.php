@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use Modules\UserToSubscription\Entities\UserToSubscription;
 use Exception;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Modules\Period\Entities\period;
 use Illuminate\Support\Facades\Lang;
 
 class SubscraptionUser extends Model {
@@ -32,7 +34,6 @@ class SubscraptionUser extends Model {
                     'SubscriptionType_id' => 'required|exists:SubscriptionType,SubscriptionType_id',
                     'period_id' => 'required|exists:period,period_id',
                     'way_id' => 'required|exists:way,way_id',
-                    'SubscriptionType_id' => 'required|exists:SubscriptionType,SubscriptionType_id',
         ]);
         if ($validator->fails()) {
             $error = $validator->messages()->toArray();
@@ -45,6 +46,22 @@ class SubscraptionUser extends Model {
         $data = [];
 
         $user = auth()->user()->toArray();
+        $row = explode('-', $request->start_date);
+//        dd($row);
+//        array:3 [
+//  0 => "2019"
+//  1 => "8"
+//  2 => "15"
+//]
+        $period = \Modules\SubscriptionType\Entities\period::where('period_id',$request->period_id)->firstorFail();
+        $dt = Carbon::create($row[0], $row[1], $row[2]);
+        $end_date = substr( $dt->addMonths($period['months']), 0,10);
+        $subscritpionTypes = \Modules\SubscriptionType\Entities\SubscriptionType::where('SubscriptionType_id',
+                $request->SubscriptionType_id)->firstorFail();
+        $payFees = \Modules\PaymentType\Entities\PaymentType::where('payment_type_id',$request->payment_type_id)->firstorFail();
+        $payment_amount = $subscritpionTypes['subscription_amount']+
+                $subscritpionTypes['tax_amount']+$payFees['transaction_fees'];
+        
         $data[] = $subscribeduser = self::create(array(
                     'user_id' => $user['user_id'],
                     'name' => $request->name,
@@ -55,19 +72,23 @@ class SubscraptionUser extends Model {
                     'latitude' => isset($request->latitude) ? $request->latitude : Null,
                     'longitude' => isset($request->longitude) ? $request->longitude : Null,
                     'payment_type_id' => $request->payment_type_id));
+        
         $userToSubscription = UserToSubscription::create(array(
                     'PaymentType_id' => $request->payment_type_id,
                     'SubscriptionType_id' => $request->SubscriptionType_id,
                     'start_date' => $request->start_date,
+                    'end_date' => $end_date,
                     'way_id' => $request->way_id,
                     'period_id' => $request->period_id,
+                    'payment_amount'=>$payment_amount,
                     'user_id' => $user['user_id'],
                     'SubscraptionUser_id' => $subscribeduser['SubscraptionUser_id'],
         ));
-        $usertoSubscriptiondetails = UserToSubscription::where('UserToSubscription_id', $userToSubscription['UserToSubscription_id'])
-                        ->with('paymentType', 'SubscriptionType')->firstorFail();
+        $usertoSubscriptiondetails = UserToSubscription::where('UserToSubscription_id',
+                $userToSubscription['UserToSubscription_id'])->with('paymentType', 'SubscriptionType')->firstorFail();
+        
         $subscribeduser['start_date'] = $usertoSubscriptiondetails['start_date'];
-        $subscribeduser['end_date'] = $usertoSubscriptiondetails['end_date'];
+        $subscribeduser['end_date'] = $end_date;
         $subscribeduser['way'] = $usertoSubscriptiondetails['way_id'];
         $subscribeduser['period'] = $usertoSubscriptiondetails['period_id'];
         $subscribeduser['payment_type_name_ar'] = $usertoSubscriptiondetails['paymentType']['name_ar'];
@@ -76,8 +97,9 @@ class SubscraptionUser extends Model {
         $subscribeduser['subscription_name_en'] = $usertoSubscriptiondetails['SubscriptionType']['name_en'];
         $subscribeduser['subscription_amount'] = $usertoSubscriptiondetails['SubscriptionType']['subscription_amount'];
         $subscribeduser['subscription_tax_amount'] = $usertoSubscriptiondetails['SubscriptionType']['tax_amount'];
-        $subscribeduser['subscription_trans_amount'] = $usertoSubscriptiondetails['SubscriptionType']['trans_amount'];
-        $subscribeduser['subscription_total_amount'] = $usertoSubscriptiondetails['SubscriptionType']['total_amount'];
+//        $subscribeduser['subscription_trans_amount'] = $usertoSubscriptiondetails['SubscriptionType']['trans_amount'];
+        $subscribeduser['subscription_trans_amount'] = $payFees['transaction_fees'];
+        $subscribeduser['subscription_total_amount'] = $payment_amount;
         return $subscribeduser;
     }
 

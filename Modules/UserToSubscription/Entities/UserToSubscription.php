@@ -11,7 +11,7 @@ use Modules\SubscraptionUser\Entities\SubscraptionUser;
 class UserToSubscription extends Model {
     protected $table = 'UserToSubscription';
     protected $primaryKey = 'UserToSubscription_id';
-    protected $fillable = ['SubscraptionUser_id', 'SubscriptionType_id','PaymentType_id',
+    protected $fillable = ['SubscraptionUser_id', 'SubscriptionType_id','PaymentType_id','renewed','payment_amount',
      'start_date', 'end_date', 'way_id','user_id','period_id'];
 // Relations Section
             public function paymentType() {
@@ -118,6 +118,7 @@ class UserToSubscription extends Model {
                     $error_msg[] = 'you donot have this subscription';
                     throw  new Exception(serialize($error_msg));
                 }
+                $rowData['renewed'] = 1;
                 $rowData['start_date'] = $request->start_date;
                 $rowData['PaymentType_id'] = $request->payment_type_id;
                 $rowData['UserToSubscription_id'] = Null;
